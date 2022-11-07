@@ -3,7 +3,9 @@
     <div class="left">
       <BoxShadowGenerator />
     </div>
-    <div class="right">f</div>
+    <div class="right">
+      <BoxShadowPreview />
+    </div>
   </div>
 </template>
 

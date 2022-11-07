@@ -31,11 +31,13 @@
 .color-picker-modal {
   position: absolute;
   margin-top: 10px;
+  z-index: 1;
 }
 </style>
 
 <script>
 export default {
+  props: ['propColor'],
   data() {
     return {
       color: "#000000",
@@ -52,6 +54,7 @@ export default {
   },
   mounted() {
     this.setBgColorPicker();
+    this.color = this.propColor;
   },
   methods: {
     setBgColorPicker() {

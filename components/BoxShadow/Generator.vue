@@ -19,7 +19,7 @@
       </template>
     </v-checkbox>
 
-    <BoxShadowColorPicker @color="getColor" />
+    <BoxShadowColorPicker @color="getColor" propColor="#000000"/>
 
     <div class="layer">
       <v-divider></v-divider>
@@ -28,14 +28,23 @@
         :list="list"
         :move="checkMove"
         @start="dragging = true"
-        @end="dragging = false"
+        @end="dragEnd()"
       >
-        <div class="item" v-for="element in list" :key="element.name">
-          <v-icon small>mdi-dots-vertical </v-icon>
-
-          {{ element.name }}
-          <v-icon small>mdi-pencil </v-icon>
-          <v-icon small>mdi-delete </v-icon>
+        <div
+          class="item"
+          v-for="(element, index) in list"
+          :class="{ active: index === activeItem }"
+          :key="element.name"
+          @click="clickItem(index)"
+        >
+          <div>
+            <v-icon small>mdi-dots-vertical </v-icon>
+            {{ element.name }}
+          </div>
+          <div style="cursor: pointer">
+            <v-icon small>mdi-pencil </v-icon>
+            <v-icon small>mdi-delete </v-icon>
+          </div>
         </div>
       </draggable>
     </div>
@@ -61,22 +70,31 @@ export default {
       checkbox: false,
       list: [
         { name: "John", id: 0 },
-        // { name: "Joao", id: 1 },
-        // { name: "Jean", id: 2 },
+        { name: "Joao", id: 1 },
+        { name: "Jean", id: 2 },
       ],
       dragging: false,
+      activeItem: 0,
+      activeItemFuture: 0,
     };
   },
   methods: {
     getColor(color) {
-      console.log(color);
+      console.log('color', color);
     },
     addLayer() {
       this.list.push({ name: "Juan " + id, id: id++ });
     },
     checkMove(e) {
-      window.console.log("Future index: " + e.draggedContext.futureIndex);
+      this.activeItemFuture = e.draggedContext.futureIndex
     },
+    clickItem(index) {
+      this.activeItem = index;
+    },
+    dragEnd() {
+      this.dragging = false
+      this.activeItem = this.activeItemFuture
+    }
   },
 };
 </script>
@@ -108,10 +126,19 @@ export default {
       margin-bottom: 20px;
     }
     .item {
-      background-color: brown;
-      i {
-        color: aliceblue;
+      &.active {
+        background-color: $violet;
+        color: $white;
+        i {
+          color: $white;
+        }
       }
+      cursor: move;
+      padding: 6px;
+      display: flex;
+      justify-content: space-between;
+      border-radius: 4px;
+      margin: 10px 0;
     }
   }
 }
