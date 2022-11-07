@@ -1,5 +1,5 @@
 <template>
-  <div :class="[$style.layout]">
+  <div class="layout">
     <div>
       <svg width="252" height="294">
         <defs>
@@ -284,30 +284,30 @@
           />
         </g>
       </svg>
-      <div :class="[$style.error]">404</div>
-      <div :class="[$style.errorsub]">Xin lỗi, trang bạn đã truy cập không tồn tại.</div>
+      <div class="error-test">404</div>
+      <div class="error-sorry">Xin lỗi, trang bạn đã truy cập không tồn tại.</div>
       <div style="display: flex;justify-content: center;">
-        <div :class="[$style.button]" @click="back">Trang chủ</div>
+        <div class="button" @click="back">Trang chủ</div>
       </div>
     </div>
   </div>
 </template>
 
-<style module>
+<style lang="scss" scoped>
 .layout {
   display: flex;
   justify-content: center;
   align-items: center;
   min-height: 100vh;
 }
-.error {
+.error-test {
   color: rgba(0, 0, 0, 0.85);
   font-size: 24px;
   line-height: 1.8;
   text-align: center;
   margin-top: 20px;
 }
-.errorsub {
+.error-sorry {
   color: rgba(0, 0, 0, 0.45);
   font-size: 14px;
   line-height: 1.6;
@@ -332,7 +332,7 @@
   opacity: 0.8;
   transition: opacity 0.2s;
 }
-</style>>
+</style>
 
 <script>
 export default {

@@ -1,0 +1,13 @@
+$md: 960px;
+
+@mixin mb {
+  @media (max-width: #{$md - 1px}) {
+    @content;
+  }
+}
+
+@mixin pc {
+  @media (min-width: #{$md}) {
+    @content;
+  }
+}

@@ -1,86 +1,87 @@
 export default {
-    // Disable server-side rendering: https://go.nuxtjs.dev/ssr-mode
-    ssr: false,
+  // Disable server-side rendering: https://go.nuxtjs.dev/ssr-mode
+  ssr: false,
 
-    // Target: https://go.nuxtjs.dev/config-target
-    target: 'static',
+  // Target: https://go.nuxtjs.dev/config-target
+  target: "static",
 
-    // Global page headers: https://go.nuxtjs.dev/config-head
-    head: {
-        title: 'Box-shadow',
-        meta: [
-            { charset: 'utf-8' },
-            { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-            { hid: 'description', name: 'description', content: '' },
-            { name: 'format-detection', content: 'telephone=no' }
-        ],
-        link: [
-            { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
-        ]
-    },
-
-    // Global CSS: https://go.nuxtjs.dev/config-css
-    css: [
-        "~/assets/css/root.css",
+  // Global page headers: https://go.nuxtjs.dev/config-head
+  head: {
+    title: "Box-shadow",
+    meta: [
+      { charset: "utf-8" },
+      { name: "viewport", content: "width=device-width, initial-scale=1" },
+      { hid: "description", name: "description", content: "" },
+      { name: "format-detection", content: "telephone=no" },
     ],
+    link: [{ rel: "icon", type: "image/x-icon", href: "/favicon.ico" }],
+  },
 
-    // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-    plugins: [],
+  // Global CSS: https://go.nuxtjs.dev/config-css
+  css: ["~/assets/scss/root.scss"],
 
-    // Auto import components: https://go.nuxtjs.dev/config-components
-    components: true,
+  styleResources: {
+    scss: ["~/assets/scss/*.scss"],
+  },
 
-    // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
-    buildModules: [
-        // https://go.nuxtjs.dev/vuetify
-        '@nuxtjs/vuetify',
-    ],
+  // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
+  plugins: [],
 
-    // Modules: https://go.nuxtjs.dev/config-modules
-    modules: [
-        // https://go.nuxtjs.dev/axios
-        '@nuxtjs/axios',
-        // https://go.nuxtjs.dev/pwa
-        '@nuxtjs/pwa',
-    ],
+  // Auto import components: https://go.nuxtjs.dev/config-components
+  components: true,
 
-    // Axios module configuration: https://go.nuxtjs.dev/config-axios
-    axios: {},
+  // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
+  buildModules: [
+    // https://go.nuxtjs.dev/vuetify
+    "@nuxtjs/vuetify",
+  ],
 
-    // PWA module configuration: https://go.nuxtjs.dev/pwa
-    pwa: {
-        manifest: {
-            lang: 'vi'
-        }
+  // Modules: https://go.nuxtjs.dev/config-modules
+  modules: [
+    // https://go.nuxtjs.dev/axios
+    "@nuxtjs/axios",
+    // https://go.nuxtjs.dev/pwa
+    "@nuxtjs/pwa",
+    '@nuxtjs/style-resources',
+  ],
+
+  // Axios module configuration: https://go.nuxtjs.dev/config-axios
+  axios: {},
+
+  // PWA module configuration: https://go.nuxtjs.dev/pwa
+  pwa: {
+    manifest: {
+      lang: "vi",
     },
+  },
 
-    // Vuetify module configuration: https://go.nuxtjs.dev/config-vuetify
-    vuetify: {
-        theme: {
-            dark: true,
-        }
+  // Vuetify module configuration: https://go.nuxtjs.dev/config-vuetify
+  vuetify: {
+    theme: {
+      dark: false,
     },
+  },
 
-    // Build Configuration: https://go.nuxtjs.dev/config-build
-    build: {
-        optimizeCSS: true,
-        html: {
-            minify: {
-                collapseBooleanAttributes: true,
-                decodeEntities: true,
-                minifyCSS: true,
-                minifyJS: true,
-                processConditionalComments: true,
-                removeEmptyAttributes: true,
-                removeRedundantAttributes: true,
-                trimCustomFragments: true,
-                useShortDoctype: true,
-                preserveLineBreaks: false,
-                collapseWhitespace: true
-            }
-        },
-        babel: {
-            compact: true,
-        },
+  // Build Configuration: https://go.nuxtjs.dev/config-build
+  build: {
+    optimizeCSS: true,
+    html: {
+      minify: {
+        collapseBooleanAttributes: true,
+        decodeEntities: true,
+        minifyCSS: true,
+        minifyJS: true,
+        processConditionalComments: true,
+        removeEmptyAttributes: true,
+        removeRedundantAttributes: true,
+        trimCustomFragments: true,
+        useShortDoctype: true,
+        preserveLineBreaks: false,
+        collapseWhitespace: true,
+      },
     },
-}
+    babel: {
+      compact: true,
+    },
+  },
+};
