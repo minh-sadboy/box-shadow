@@ -3,18 +3,41 @@
     <div class="preview-header">
       <h2 class="preview-title">Preview</h2>
       <div class="d-flex">
-        <BoxShadowColorPicker propColor="#ffffff" />
-        <BoxShadowColorPicker class="ml-3" propColor="#2196f3" />
+        <BoxShadowColorPicker propColor="#ffffff" @color="colorBg" />
+        <BoxShadowColorPicker
+          class="ml-3"
+          propColor="#2196f3"
+          @color="colorBox"
+        />
       </div>
     </div>
-    <div class="preview-section">
-      <div class="preview-area"></div>
+    <div class="preview-section" ref="previewSection">
+      <span
+        v-for="element in list"
+        :key="element.id"
+        class="preview-area"
+        :style="{ boxShadow: element.name }"
+      ></span>
+      <div class="preview-area" ref="previewArea"></div>
     </div>
   </div>
 </template>
 
 <script>
-export default {};
+export default {
+  props: ["list"],
+  data() {
+    return {};
+  },
+  methods: {
+    colorBg(color) {
+      this.$refs.previewSection.style.backgroundColor = color;
+    },
+    colorBox(color) {
+      this.$refs.previewArea.style.backgroundColor = color;
+    },
+  },
+};
 </script>
 
 <style lang="scss" scoped>
@@ -43,13 +66,19 @@ export default {};
   }
 
   .preview-section {
+    min-height: 280px;
     padding: 40px;
+    @include mb {
+      display: flex;
+      padding: 40px 0;
+      justify-content: center;
+    }
   }
 
   .preview-area {
+    position: absolute;
     width: 200px;
     height: 200px;
-    background-color: aqua;
   }
 }
 </style>

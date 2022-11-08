@@ -19,11 +19,11 @@
       </template>
     </v-checkbox>
 
-    <BoxShadowColorPicker @color="getColor" propColor="#000000"/>
+    <BoxShadowColorPicker @color="getColor" propColor="#000000" />
 
     <div class="layer">
       <v-divider></v-divider>
-      <v-btn small class="btn" @click="addLayer">Layer </v-btn>
+      <v-btn small class="btn" @click="addLayer">Add Layer </v-btn>
       <draggable
         :list="list"
         :move="checkMove"
@@ -34,7 +34,7 @@
           class="item"
           v-for="(element, index) in list"
           :class="{ active: index === activeItem }"
-          :key="element.name"
+          :key="element.id"
           @click="clickItem(index)"
         >
           <div>
@@ -43,7 +43,9 @@
           </div>
           <div style="cursor: pointer">
             <v-icon small>mdi-pencil </v-icon>
-            <v-icon small>mdi-delete </v-icon>
+            <span @click="removeItem(index)"
+              ><v-icon small>mdi-delete </v-icon></span
+            >
           </div>
         </div>
       </draggable>
@@ -58,43 +60,105 @@ export default {
   components: {
     draggable,
   },
+  props: ["listExample"],
   data() {
     return {
       silderData: [
         { name: "Shift right", min: -50, max: 50, value: 0, key: "shiftRight" },
         { name: "Shift down", min: -50, max: 50, value: 0, key: "shiftDown" },
         { name: "Spread", min: 0, max: 100, value: 3, key: "spread" },
-        { name: "Blur", min: 0, max: 100, value: 3, key: "blur" },
+        { name: "Blur", min: 0, max: 100, value: 5, key: "blur" },
         { name: "Opacity", min: 0, max: 100, value: 20, key: "opacity" },
       ],
       checkbox: false,
-      list: [
-        { name: "John", id: 0 },
-        { name: "Joao", id: 1 },
-        { name: "Jean", id: 2 },
-      ],
+      list: [{ name: "0px 0px 5px 3px rgba(0,0,0,0.2)", id: 0 }],
       dragging: false,
       activeItem: 0,
       activeItemFuture: 0,
+      colorValue: "0,0,0",
     };
+  },
+  watch: {
+    silderData: {
+      handler(newValue, oldValue) {
+        this.formatToCSS();
+      },
+      deep: true,
+    },
+    colorValue(newValue) {
+      this.formatToCSS();
+    },
+    checkbox(newValue) {
+      this.formatToCSS();
+    },
+    list: {
+      handler(newValue, oldValue) {
+        this.$emit("listShadow", newValue);
+      },
+      deep: true,
+    },
+    listExample(newValue) {
+      id = newValue.length
+      this.list = newValue;
+    },
   },
   methods: {
     getColor(color) {
-      console.log('color', color);
+      this.colorValue = this.hexToRgbA(color);
     },
     addLayer() {
-      this.list.push({ name: "Juan " + id, id: id++ });
+      this.list.push({ name: "0px 0px 5px 3px rgba(0,0,0,0.2)", id: id++ });
+    },
+    removeItem(index) {
+      if (this.list.length > 1) {
+        this.list.splice(index, 1);
+      }
     },
     checkMove(e) {
-      this.activeItemFuture = e.draggedContext.futureIndex
+      this.activeItemFuture = e.draggedContext.futureIndex;
     },
     clickItem(index) {
       this.activeItem = index;
     },
     dragEnd() {
-      this.dragging = false
-      this.activeItem = this.activeItemFuture
-    }
+      this.dragging = false;
+      this.activeItem = this.activeItemFuture;
+    },
+    formatToCSS() {
+      let css =
+        this.getValueBySilderDataKey("shiftRight")[0].value +
+        "px " +
+        this.getValueBySilderDataKey("shiftDown")[0].value +
+        "px " +
+        this.getValueBySilderDataKey("blur")[0].value +
+        "px " +
+        this.getValueBySilderDataKey("spread")[0].value +
+        "px " +
+        "rgba(" +
+        this.colorValue +
+        "," +
+        Number(this.getValueBySilderDataKey("opacity")[0].value) / 100 +
+        ")";
+      if (this.checkbox) {
+        css = css + " inset";
+      }
+      this.list[this.activeItem].name = css;
+    },
+    getValueBySilderDataKey(key) {
+      return this.silderData.filter((data) => data.key === key);
+    },
+    hexToRgbA(hex) {
+      let c;
+      if (/^#([A-Fa-f0-9]{3}){1,2}$/.test(hex)) {
+        c = hex.substring(1).split("");
+        if (c.length == 3) {
+          c = [c[0], c[0], c[1], c[1], c[2], c[2]];
+        }
+        c = "0x" + c.join("");
+        return [(c >> 16) & 255, (c >> 8) & 255, c & 255].join(",");
+      }
+      throw new Error("Bad Hex");
+    },
   },
 };
 </script>

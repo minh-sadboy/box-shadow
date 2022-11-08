@@ -3,7 +3,7 @@
     <div
       class="color-picker"
       ref="colorPicker"
-      @click="showColorPicker = !showColorPicker"
+      @click="openColorPicker()"
     ></div>
     <div
       class="color-picker-modal"
@@ -37,7 +37,7 @@
 
 <script>
 export default {
-  props: ['propColor'],
+  props: ["propColor"],
   data() {
     return {
       color: "#000000",
@@ -47,7 +47,6 @@ export default {
   },
   watch: {
     color(newValue) {
-      this.checkOnClickOutside = true;
       this.setBgColorPicker();
       this.$emit("color", newValue);
     },
@@ -65,6 +64,12 @@ export default {
         this.showColorPicker = false;
         this.checkOnClickOutside = false;
       }
+    },
+    openColorPicker() {
+      this.showColorPicker = !this.showColorPicker;
+      setTimeout(() => {
+        this.checkOnClickOutside = true;
+      }, 100);
     },
   },
 };
